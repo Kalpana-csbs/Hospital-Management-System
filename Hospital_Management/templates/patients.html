@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Hospital Management</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/patients" class="active">Patients</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <div class="form-container">
+            <h2>Add New Patient</h2>
+            <form action="/add_patient" method="POST" class="animate-form">
+                <input type="text" name="name" placeholder="Patient Name" required>
+                <input type="number" name="age" placeholder="Age" required>
+                <select name="gender" required>
+                    <option value="">Select Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <textarea name="symptoms" placeholder="Symptoms" required></textarea>
+                <button type="submit" class="submit-btn">Add Patient</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Patient List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Symptoms</th>
+                        <th>Admission Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for patient in patients %}
+                    <tr data-id="{{ patient.id }}">
+                        <td>{{ patient.name }}</td>
+                        <td>{{ patient.age }}</td>
+                        <td>{{ patient.gender }}</td>
+                        <td>{{ patient.symptoms }}</td>
+                        <td>{{ patient.admission_date.strftime('%Y-%m-%d') }}</td>
+                        <td>
+                            <button class="edit-btn" onclick="editPatient({{ patient.id }})">Edit</button>
+                            <button class="delete-btn" onclick="deletePatient({{ patient.id }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/patients.js') }}"></script>
+</body>
+</html>

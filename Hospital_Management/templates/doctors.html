@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Hospital Management</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/patients">Patients</a>
+            <a href="/doctors" class="active">Doctors</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <div class="form-container">
+            <h2>Add New Doctor</h2>
+            <form action="/add_doctor" method="POST" class="animate-form">
+                <input type="text" name="name" placeholder="Doctor Name" required>
+                <input type="text" name="specialization" placeholder="Specialization" required>
+                <input type="tel" name="phone" placeholder="Phone Number" required>
+                <button type="submit" class="submit-btn">Add Doctor</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Doctor List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Specialization</th>
+                        <th>Phone</th>
+                        <th>Availability</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for doctor in doctors %}
+                    <tr data-id="{{ doctor.id }}">
+                        <td>{{ doctor.name }}</td>
+                        <td>{{ doctor.specialization }}</td>
+                        <td>{{ doctor.phone }}</td>
+                        <td>{{ "Available" if doctor.availability else "Not Available" }}</td>
+                        <td>
+                            <button class="edit-btn" onclick="editDoctor({{ doctor.id }})">Edit</button>
+                            <button class="delete-btn" onclick="deleteDoctor({{ doctor.id }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/doctors.js') }}"></script>
+</body>
+</html>

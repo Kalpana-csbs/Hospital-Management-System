@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital Management - Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="logo-section">
+                <i class="fas fa-hospital-symbol"></i>
+            </div>
+            <h2>Hospital Management</h2>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            <form action="/login" method="POST" class="animated-form">
+                <div class="input-group">
+                    <input type="text" name="username" required>
+                    <span class="highlight"></span>
+                    <label>Username</label>
+                </div>
+                <div class="input-group">
+                    <input type="password" name="password" required>
+                    <span class="highlight"></span>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="login-btn">
+                    <span>Login</span>
+                    <div class="ripple"></div>
+                </button>
+            </form>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

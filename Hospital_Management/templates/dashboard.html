@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard - Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Hospital Management</div>
+        <div class="nav-links">
+            <a href="/dashboard" class="active">Dashboard</a>
+            <a href="/patients">Patients</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/appointments">Appointments</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="dashboard-wrapper">
+        <div class="welcome-banner">
+            <h1>Welcome, {{ session['username'] }}!</h1>
+        </div>
+        
+        <div class="stats-grid">
+            <div class="stat-card patients">
+                <i class="fas fa-users"></i>
+                <h3>Total Patients</h3>
+                <p class="counter">{{ patients }}</p>
+            </div>
+            <div class="stat-card doctors">
+                <i class="fas fa-user-md"></i>
+                <h3>Total Doctors</h3>
+                <p class="counter">{{ doctors }}</p>
+            </div>
+            <div class="stat-card appointments">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Today's Appointments</h3>
+                <p class="counter">{{ appointments }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Font Awesome for icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+</body>
+</html>

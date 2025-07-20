@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointments - Hospital Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">Hospital Management</div>
+        <div class="nav-links">
+            <a href="/dashboard">Dashboard</a>
+            <a href="/patients">Patients</a>
+            <a href="/doctors">Doctors</a>
+            <a href="/appointments" class="active">Appointments</a>
+            <a href="/logout">Logout</a>
+        </div>
+    </nav>
+
+    <div class="content-container">
+        <div class="form-container">
+            <h2>Schedule New Appointment</h2>
+            <form action="/add_appointment" method="POST" class="animate-form">
+                <select name="patient_id" required>
+                    <option value="">Select Patient</option>
+                    {% for patient in patients %}
+                    <option value="{{ patient.id }}">{{ patient.name }}</option>
+                    {% endfor %}
+                </select>
+                <select name="doctor_id" required>
+                    <option value="">Select Doctor</option>
+                    {% for doctor in doctors %}
+                    <option value="{{ doctor.id }}">{{ doctor.name }} ({{ doctor.specialization }})</option>
+                    {% endfor %}
+                </select>
+                <input type="datetime-local" name="appointment_time" required>
+                <textarea name="notes" placeholder="Appointment Notes"></textarea>
+                <button type="submit" class="submit-btn">Schedule Appointment</button>
+            </form>
+        </div>
+
+        <div class="table-container">
+            <h2>Appointments List</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Patient</th>
+                        <th>Doctor</th>
+                        <th>Date & Time</th>
+                        <th>Notes</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr data-id="{{ appointment.id }}">
+                        <td data-id="{{ appointment.patient_id }}">{{ appointment.patient.name }}</td>
+                        <td data-id="{{ appointment.doctor_id }}">{{ appointment.doctor.name }}</td>
+                        <td data-date="{{ appointment.appointment_time.strftime('%Y-%m-%dT%H:%M') }}">
+                            {{ appointment.appointment_time.strftime('%Y-%m-%d %H:%M') }}
+                        </td>
+                        <td>{{ appointment.notes }}</td>
+                        <td>
+                            <button class="edit-btn" onclick="editAppointment({{ appointment.id }})">Edit</button>
+                            <button class="delete-btn" onclick="deleteAppointment({{ appointment.id }})">Delete</button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='js/appointments.js') }}"></script>
+</body>
+</html>
